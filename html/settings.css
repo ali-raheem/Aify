@@ -1,0 +1,9 @@
+.settings-grid {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    gap: 10px;
+    align-items: center;
+}
+.full-width {
+    grid-column: span 5;
+}

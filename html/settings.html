@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Aify Settings</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="settings.css">
+  </head>
+  <body>
+    <h1>Aify Settings</h1>
+    <div class="settings-grid">
+      <label for="model">Model:</label>
+      <select id="model">
+        <option>gpt-3.5</option>
+        <option>gpt-4</option>
+      </select>
+
+      <label for="api-key" class="full-width">API Key:</label>
+      <input type="text" id="api-key" class="full-width" />
+
+      <div id="actions-container">
+        <!-- Action inputs will be added here dynamically -->
+      </div>
+
+      <button id="add-action">Add Action</button>
+    </div>
+    <button id="save-settings">Save</button>
+    <button id="default-settings">Reset</button>
+
+    <script src="settings.js"></script>
+  </body>
+</html>

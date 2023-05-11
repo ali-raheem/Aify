@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Aify",
+  "version": "1.0",
+  "description": "A Thunderbird plugin to rewrite text based on user-selected actions.",
+  "author": "Ali Raheem",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "aify@shoryuken.me",
+      "strict_min_version": "78.0"
+    }
+  },
+  "permissions": ["menus", "storage", "messagesRead", "messagesModify", "compose"],
+  "options_ui": {
+    "page": "html/settings.html",
+    "open_in_tab": true
+  },
+  "compose_action": {
+    "default_title": "Aify",
+    "default_popup": "html/actions.html"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  }
+}
