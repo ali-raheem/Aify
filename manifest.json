@@ -17,6 +17,7 @@
   },
   "compose_action": {
     "default_title": "Aify",
+    "default_icon": "/icon.png",
     "default_popup": "/html/actions.html"
   },
   "background": {
