@@ -73,14 +73,24 @@ document.addEventListener('DOMContentLoaded', function () {
         var actionDiv = document.createElement('div');
         var nameInput = document.createElement('input');
         var promptInput = document.createElement('textarea');
+        var deleteButton = document.createElement('button');
 
         nameInput.type = 'text';
         nameInput.value = name;
+        nameInput.classList.add('action-name');
         promptInput.value = prompt;
-       nameInput.classList.add('action-name');
-       promptInput.classList.add('action-prompt');
+        promptInput.classList.add('action-prompt');
+        deleteButton.innerText = 'Delete Prompt';
+        deleteButton.classList.add('button', 'bad');
+
+        deleteButton.addEventListener('click', function() {
+            actionDiv.remove();
+        });
+
         actionDiv.appendChild(nameInput);
         actionDiv.appendChild(promptInput);
+        actionDiv.appendChild(deleteButton);
         actionsContainer.appendChild(actionDiv);
     }
+
 });
