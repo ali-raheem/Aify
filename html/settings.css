@@ -2,6 +2,7 @@
 textarea {
     height: 200px;
 }
+
 input[type=text], select, textarea{
   width: 100%;
   padding: 12px;
@@ -10,18 +11,10 @@ input[type=text], select, textarea{
   box-sizing: border-box;
   resize: vertical;
 }
+
 label {
   padding: 12px 12px 12px 0;
   display: inline-block;
-}
-input[type=submit] {
-  background-color: #04AA6D;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  float: right;
 }
 
 .button {
@@ -43,6 +36,7 @@ input[type=submit] {
 .good {
     background-color: #04AA6D;
 }
+
 .container {
   border-radius: 5px;
   background-color: #f2f2f2;
@@ -68,7 +62,7 @@ input[type=submit] {
 }
 
 @media screen and (max-width: 600px) {
-  .col-25, .col-75, input[type=submit] {
+  .col-25, .col-75 {
     width: 100%;
     margin-top: 0;
   }
