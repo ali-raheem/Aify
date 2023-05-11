@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Aify",
-  "version": "1.0",
+  "version": "1.1",
   "description": "A Thunderbird plugin to rewrite text based on user-selected actions using OpenAI's API.",
   "author": "Ali Raheem",
   "browser_specific_settings": {
