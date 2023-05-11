@@ -12,7 +12,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addAction(name, prompt) {
         var actionDiv = document.createElement('div');
-        var nameInput = document.createElement('button');
+        var nameInput = document.createElement('p');
+        nameInput.classList.add('button,');
+        nameInput.classList.add('.neutral');
         nameInput.innerText = name;
         nameInput.classList.add('action-name');
         
@@ -39,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     await browser.storage.local.set({original: original, action: action, draftTitle: draftTitle});
 
     // Open the new window
-    browser.windows.create({url: "/html/draft.html", type: "popup", width: 500, height: 300});
+    browser.windows.create({url: "/html/draft.html", type: "popup", width: 500, height: 600});
 }
 
 });

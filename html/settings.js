@@ -32,18 +32,18 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Save settings when the "Save" button is clicked
-  saveButton.addEventListener('click', function () {
-    var actions = Array.from(actionsContainer.children).map(function (actionDiv) {
-      var nameInput = actionDiv.querySelector('.action-name');
-      var promptInput = actionDiv.querySelector('.action-prompt');
-      return { name: nameInput.value, prompt: promptInput.value };
+    saveButton.addEventListener('click', function () {
+        var actions = Array.from(actionsContainer.children).map(function (actionDiv) {
+        var nameInput = actionDiv.querySelector('.action-name');
+        var promptInput = actionDiv.querySelector('.action-prompt');
+        return { name: nameInput.value, prompt: promptInput.value };
+        });
+        browser.storage.local.set({
+        model: modelSelect.value,
+        apiKey: apiKeyInput.value,
+        actions: actions
+        });
     });
-    browser.storage.local.set({
-      model: modelSelect.value,
-      apiKey: apiKeyInput.value,
-      actions: actions
-    });
-  });
 
     // Reset to default settings when the "Defaults" button is clicked
     defaultButton.addEventListener('click', function () {
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Reset the Model and API Key
-        modelSelect.value = 'GPT-3.5';
+        modelSelect.value = defaultModel;
         apiKeyInput.value = '';
 
         // Set the actions back to default
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Save these default settings
         browser.storage.local.set({
-            model: 'gpt-3.5',
+            model: defaultModel,
             apiKey: '',
             actions: defaultActions
         });
@@ -73,13 +73,12 @@ document.addEventListener('DOMContentLoaded', function () {
         var actionDiv = document.createElement('div');
         var nameInput = document.createElement('input');
         var promptInput = document.createElement('textarea');
+
         nameInput.type = 'text';
-        promptInput.type = 'text';
         nameInput.value = name;
         promptInput.value = prompt;
-        nameInput.classList.add('action-name');
-        promptInput.classList.add('action-prompt');
-        promptInput.classList.add('full-width');
+       nameInput.classList.add('action-name');
+       promptInput.classList.add('action-prompt');
         actionDiv.appendChild(nameInput);
         actionDiv.appendChild(promptInput);
         actionsContainer.appendChild(actionDiv);
