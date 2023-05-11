@@ -1,17 +1,14 @@
 document.addEventListener('DOMContentLoaded', async function () {
     const draftContainer = document.getElementById('draft-container');
 
-    // Load the original and action from local storage
     const data = await browser.storage.local.get(['original', 'action', 'draftTitle']);
     const original = data.original;
     const action = data.action;
     const draftTitle = data.draftTitle;
     
-    // Make the API call
     try {
         const draft = await callBackendAPI(original, action);
 
-        // Update the window content with the response from the API
         draftContainer.innerText = draft;
         document.title = draftTitle;
     } catch (error) {
