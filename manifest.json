@@ -10,6 +10,11 @@
       "strict_min_version": "78.0"
     }
   },
+  "icons": {
+    "64": "/images/icon-64px.png",
+    "32": "/images/icon-32px.png",
+    "16": "/images/icon-16px.png"
+  },
   "permissions": ["menus", "storage", "compose"],
   "options_ui": {
     "page": "/html/settings.html",
@@ -17,7 +22,7 @@
   },
   "compose_action": {
     "default_title": "Aify",
-    "default_icon": "/icon.png",
+    "default_icon": "/images/icon-64px.png",
     "default_popup": "/html/actions.html"
   },
   "background": {
