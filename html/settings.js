@@ -11,12 +11,14 @@ document.addEventListener('DOMContentLoaded', function () {
   var defaultActions = [
     { name: 'Rewrite Polite', prompt: 'Rewrite the following text to be more polite. Reply with only the re-written text and no extra comments.' },
     { name: 'Rewrite Formal', prompt: 'Rewrite the following text to be more formal. Reply with only the re-written text and no extra comments.' },
-    { name: 'Classify', prompt: 'Classify the following text in terms of Politeness, Warmth, Formality, Assertiveness, Offensiveness giving a percentage for each category. Reply with only the category and score and no extra text.' }
+    { name: 'Classify', prompt: 'Classify the following text in terms of Politeness, Warmth, Formality, Assertiveness, Offensiveness giving a percentage for each category. Reply with only the category and score and no extra text.' },
+    { name: 'Prompt provided', prompt: ' ' }
   ];
+  var defaultModel = 'gpt-3.5-turbo';
 
   // Load saved settings when the page is loaded
   browser.storage.local.get(['model', 'apiKey', 'actions'], function (data) {
-    modelSelect.value = data.model || 'gpt-3.5';
+    modelSelect.value = data.model || defaultModel;
     apiKeyInput.value = data.apiKey || '';
     var actions = data.actions || defaultActions;
     actions.forEach(function (action) {

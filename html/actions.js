@@ -35,43 +35,11 @@ document.addEventListener('DOMContentLoaded', function () {
         actionsContainer.appendChild(actionDiv);
     }
     async function rewrite(original, action, draftTitle) {
-        // Call your API here and get the response
-        var response = await callBackendAPI(original, action);
+    // Save the original and action in local storage so that they can be accessed in the new window
+    await browser.storage.local.set({original: original, action: action, draftTitle: draftTitle});
 
-        // Save the draft in local storage so that it can be accessed in the new popup
-        await browser.storage.local.set({draft: response});
-
-        // Open the new popup
-        browser.windows.create({url: "/html/draft.html", titlePreface: draftTitle, type: "popup", width: 500, height: 300});
-    }
-
-
-    async function callBackendAPI(original, action) {
-        console.log("Calling backend with", action, original);
-        const data = await browser.storage.local.get(['model', 'apiKey', 'actions']);
-        const model = data.model;
-        const apiKey = data.apiKey;
-
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-                model: model,
-                messages: [{role: 'user', content: `${action}\n---\n${original}`}]
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(`API request failed: ${response.status}`);
-        }else {
-            console.log("Got repsonse");
-        }
-
-        const responseData = await response.json();
-        return responseData.choices[0].message.content;
-    }
+    // Open the new window
+    browser.windows.create({url: "/html/draft.html", type: "popup", width: 500, height: 300});
+}
 
 });
