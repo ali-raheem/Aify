@@ -7,8 +7,9 @@
 ### Configuration
 
 1. Set an API key in the addons settings menu (obtainable from [OpenAI](https://platform.openai.com/signup/).
-2. (Optional) Add, remove or edit the available actions.
-3. **Make sure to click save at the bottom of the page**
+2. **Make sure you have access to the model (anyone can use gpt-3.5-turbo).**
+3. (Optional) Add, remove or edit the available actions.
+4. **Make sure to click save at the bottom of the page**
 
 ### Usage
 
