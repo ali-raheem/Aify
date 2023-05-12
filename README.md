@@ -2,6 +2,17 @@
 
 [Thunderbird addon](https://addons.thunderbird.net/en-GB/thunderbird/addon/aify/) to bring ChatGPT to your emails.
 
+![Configuration](/screenshots/example.png)
+Make sure to configure the addon before use. You must at least set an API key and save it.
+
+![Expand short sentences into detailed text](/screenshots/example1.png)
+You can use Aify to turn sentences into detailed emails.
+
+![Translate or interpret complex text](/screenshots/example2.png)
+Or even translate and understand complex text.
+
+Aify comes with plenty of stock prompts, which you can add to, delete or customize as you need. It can make use of any of the Chat models OpenAI provides.
+
 ## Configuration and Usage
 
 ### Configuration
