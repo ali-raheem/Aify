@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var actionsContainer = document.getElementById("actions-container");
     var addActionButton = document.getElementById("add-action");
     var saveButton = document.getElementById("save-settings");
+    var getModelsButton = document.getElementById("get-models");
     var maxTokensInput = document.getElementById("max-tokens");
     var defaultButton = document.getElementById("default-settings");
     var defaultActions = [
@@ -47,6 +48,28 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         browser.storage.local.set({ model: defaultModel, apiKey: "", actions: defaultActions });
     });
+    getModelsButton.addEventListener("click", async function () {
+	var apiKeyInput = document.getElementById("api-key");
+	const response = await fetch("https://api.openai.com/v1/models", {
+            method: "GET",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKeyInput.value}` },
+	});
+	if (!response.ok) {
+            throw new Error(`API request failed: ${response.status}`);
+	}
+	const responseData = await response.json();
+	var selectElement = document.getElementById("model");
+	selectElement.remove(0);
+	responseData.data.map(model => {
+	    let option = document.createElement("option");
+	    let selectElement = document.getElementById("model");
+	    option.value = model.id;
+	    option.text = model.id;
+	    selectElement.add(option);
+	});
+	getModelsButton.disabled = true;
+    });
+
     function addAction(name, prompt) {
         var actionDiv = document.createElement("div");
         var nameInput = document.createElement("input");

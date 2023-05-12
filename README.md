@@ -37,8 +37,9 @@ zip -r ../aify.xpi *
 
 ## Todo
 
-- [HIGH] Use the API to identify available models.
-- [MOD] You should be able to specify a model name (useful for finetunings).
+- ~~[HIGH] Use the API to identify available models.~~
+- ~~[MOD] You should be able to specify a model name (useful for finetunings).~~
+- ~~[HIGH] Limit length.~~
 - [MOD] Model selection should be on a per-prompt basis.
 - [LOW] Model selection should be selectable from the context menu.
 - [MOD] Make it so any API could be used.

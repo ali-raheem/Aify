@@ -15,6 +15,7 @@
 	  <ol>
 	    <li>Set an API key below (obtainable from <a href="https://platform.openai.com/signup/">OpenAI</a>).</li>
 	    <li><b>Make sure you have access to the model (anyone can use gpt-3.5-turbo).</b></li>
+	    <li>(Optional) Once you've set an API key you can click Get Models to update available models.</li>
 	    <li>(Optional) Add, remove or edit the available actions.</li>
 	    <li><b>Make sure to click save at the bottom of the page.</b></li>
 	  </ol>
@@ -44,7 +45,6 @@
         <div class="col-75">
           <select id="model">
 	    <option>gpt-3.5-turbo</option>
-	    <option>gpt-4</option>
 	  </select>
         </div>
       </div>
@@ -64,6 +64,13 @@
 	</div>
       </div>
       <div class="row">
+	<div class="col-25"></div>
+	<div class="col-75">
+	  <button id="get-models" value="Update Model List" class="button neutral">Update Models (need API key)</button>
+          <button value="Save" id="save-settings" class="button good">Save</button>
+	</div>
+      </div>
+      <div class="row">
         <div class="col-25"> <label for="actions-container">Actions</label> </div>
         <div class="col-75"> <div class="container" id="actions-container"> </div></div>
       </div>
@@ -72,7 +79,6 @@
 	<div class="col-75">
           <button id="add-action" value="Add Action" class="button neutral">New Action</button>
           <button id="default-settings" value="Reset" class="button bad">Defaults</button>
-          <button value="Save" id="save-settings" class="button good">Save</button>
 	</div>
       </div>
       <script src="settings.js"></script>
