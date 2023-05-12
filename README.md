@@ -42,6 +42,7 @@ zip -r ../aify.xpi *
 - [LOW] Model selection should be selectable from the context menu.
 - [MOD] Make it so any API could be used.
 - [HIGH] Styling and UX improvements.
+- [LOW] Mask API key in settings once saved.
 
 ## Privacy and Data Retention
 
