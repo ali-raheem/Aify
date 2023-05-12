@@ -53,6 +53,17 @@
         <div class="col-75"> <input type="text" id="api-key" placeholder="Your API Key.." class="full-width"></div>
       </div>
       <div class="row">
+        <div class="col-25"> <label for="max-tokens">Max Length (in tokens)</label></div>
+        <div class="col-75">
+          <select id="max-tokens">
+            <option value="0">Unlimited</option>
+            <option value="300">Long (300 tokens)</option>
+            <option value="100">Medium (100 tokens)</option>
+            <option value="50">Short (50 tokens)</option>
+          </select>
+	</div>
+      </div>
+      <div class="row">
         <div class="col-25"> <label for="actions-container">Actions</label> </div>
         <div class="col-75"> <div class="container" id="actions-container"> </div></div>
       </div>

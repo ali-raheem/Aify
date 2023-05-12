@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var actionsContainer = document.getElementById("actions-container");
     var addActionButton = document.getElementById("add-action");
     var saveButton = document.getElementById("save-settings");
+    var maxTokensInput = document.getElementById("max-tokens");
     var defaultButton = document.getElementById("default-settings");
     var defaultActions = [
         { name: "Reply to this", prompt: "Reply to the following email." },
@@ -14,9 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
         { name: "Prompt provided", prompt: " " },
     ];
     var defaultModel = "gpt-3.5-turbo";
-    browser.storage.local.get(["model", "apiKey", "actions"], function (data) {
+    browser.storage.local.get(["model", "apiKey", "actions", "maxTokens"], function (data) {
         modelSelect.value = data.model || defaultModel;
         apiKeyInput.value = data.apiKey || "";
+	maxTokensInput.value = data.maxTokens || 0;
         var actions = data.actions || defaultActions;
         actions.forEach(function (action) {
             addAction(action.name, action.prompt);
@@ -31,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var promptInput = actionDiv.querySelector(".action-prompt");
             return { name: nameInput.value, prompt: promptInput.value };
         });
-        browser.storage.local.set({ model: modelSelect.value, apiKey: apiKeyInput.value, actions: actions });
+        browser.storage.local.set({ model: modelSelect.value, apiKey: apiKeyInput.value, actions: actions, maxTokens: maxTokensInput.value });
     });
     defaultButton.addEventListener("click", function () {
         while (actionsContainer.firstChild) {
@@ -39,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         modelSelect.value = defaultModel;
         apiKeyInput.value = "";
+	maxTokens.value = 0;
         defaultActions.forEach(function (action) {
             addAction(action.name, action.prompt);
         });

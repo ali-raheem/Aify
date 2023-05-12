@@ -14,13 +14,19 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 });
 async function callBackendAPI(original, action) {
-    const data = await browser.storage.local.get(["model", "apiKey"]);
+    const data = await browser.storage.local.get(["model", "apiKey", "maxTokens"]);
     const model = data.model;
     const apiKey = data.apiKey;
+    const maxTokens = parseInt(data.maxTokens);
+    console.log(maxTokens);
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-        body: JSON.stringify({ model: model, messages: [{ role: "user", content: `${action}\n---\n${original}` }] }),
+	body: JSON.stringify({ 
+	    model: model, 
+	    messages: [{ role: "user", content: `${action}\n---\n${original}` }], 
+	    ...(maxTokens ? { 'max_tokens': maxTokens } : {})
+	}),
     });
     if (!response.ok) {
         throw new Error(`API request failed: ${response.status}`);
