@@ -1,62 +1,69 @@
 <!DOCTYPE html>
-    <html>
-        <head>
-            <title>Aify Settings</title>
-            <link rel="stylesheet" type="text/css" media="screen" href="settings.css">
-        </head>
-        <body>
-          <h1>Aify Settings</h1>
-	  <div class="container">
-	    <div class="row">
-	      <div class="col-25">
-		Configuration
-	      </div>
-	      <div class="col-75">
-		<ol>
-<li>Set an API key in the addons settings menu (obtainable from <a href="https://platform.openai.com/signup/">OpenAI</a>.</li>
-<li>(Optional) Add, remove or edit the available actions.</li>
-<li><b>Make sure to click save at the bottom of the page</b></li>
-		</ol>
-	      </div>
-	    </div>
-	    <div class="row">
-	      <div class="col-25">
-		Usage
-	      </div>
-	      <div class="col-75">
-		<ol>
-<li>Open a new compose window (Write, Reply or Forward).</li>
-<li>Highlight some text to act one.</li>
-<li>Click the Aify icon in the top right (near the lightbulb) and pick an action.</li>
-<li>A popup will open and await the response from the API. This may take time at periods of high load.</li>
-		</ol>
-	      </div>
-	    </div>
-	  </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-25"> <label for="model">Model:</label> </div>
-                    <div class="col-75">
-                        <select id="model"> <option>gpt-3.5-turbo</option> <option>gpt-4</option> </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-25"> <label for="api-key">API Key:</label></div>
-                    <div class="col-75"> <input type="text" id="api-key" placeholder="Your API Key.." class="full-width"></div>
-                </div>
-                <div class="row">
-                    <div class="col-25"> <label for="actions-container">Actions:</label> </div>
-                    <div class="col-75"> <div class="container" id="actions-container"> </div></div>
-                </div>
-                <div class="row">
-		  <div class="col-25"> </div>
-		  <div class="col-75">
-                    <button id="add-action" value="Add Action" class="button neutral">New Action</button>
-                    <button id="default-settings" value="Reset" class="button bad">Defaults</button>
-                    <button value="Save" id="save-settings" class="button good">Save</button>
-		    </div>
-                </div>
-                <script src="settings.js"></script>
-            </div>
-        </body>
-    </html>
+<html>
+  <head>
+    <title>Aify Settings</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="settings.css">
+  </head>
+  <body>
+    <h1>Aify Settings</h1>
+    <div class="container">
+      <div class="row">
+	<div class="col-25">
+	  Configuration
+	</div>
+	<div class="col-75">
+	  <ol>
+	    <li>Set an API key below (obtainable from <a href="https://platform.openai.com/signup/">OpenAI</a>).</li>
+	    <li>(Optional) Add, remove or edit the available actions.</li>
+	    <li><b>Make sure to click save at the bottom of the page.</b></li>
+	  </ol>
+	</div>
+      </div>
+      <div class="row">
+	<div class="col-25">
+	  Usage
+	</div>
+	<div class="col-75">
+	  <ol>
+	    <li>Open a new compose window (Write, Reply or Forward).</li>
+	    <li>Highlight some text to act one.</li>
+	    <li>Click the Aify icon in the top right (near the lightbulb) and pick an action.</li>
+	    <li>A popup will open and await the response from the API. This may take time at periods of high load.</li>
+	  </ol>
+	</div>
+      </div>
+      <div class="row">
+	<div class="col-25">Support</div>
+	<div class="col-75">Need more help? Email us <a href="mailto:aify@shoryuken.me">aify@shoryuken.me</a>.</div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-25"> <label for="model">Model</label> </div>
+        <div class="col-75">
+          <select id="model">
+	    <option>gpt-3.5-turbo</option>
+	    <option>gpt-4</option>
+	  </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-25"> <label for="api-key">API Key</label></div>
+        <div class="col-75"> <input type="text" id="api-key" placeholder="Your API Key.." class="full-width"></div>
+      </div>
+      <div class="row">
+        <div class="col-25"> <label for="actions-container">Actions</label> </div>
+        <div class="col-75"> <div class="container" id="actions-container"> </div></div>
+      </div>
+      <div class="row">
+	<div class="col-25"> </div>
+	<div class="col-75">
+          <button id="add-action" value="Add Action" class="button neutral">New Action</button>
+          <button id="default-settings" value="Reset" class="button bad">Defaults</button>
+          <button value="Save" id="save-settings" class="button good">Save</button>
+	</div>
+      </div>
+      <script src="settings.js"></script>
+    </div>
+  </body>
+</html>
