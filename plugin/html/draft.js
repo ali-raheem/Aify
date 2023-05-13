@@ -1,9 +1,9 @@
-document.addEventListener("DOMContentLoaded", async function () {
-    const draftContainer = document.getElementById("draft-container");
-    const data = await browser.storage.local.get(["original", "action", "draftTitle"]);
-    const original = data.original;
-    const action = data.action;
-    const draftTitle = data.draftTitle;
+async function regenerate (draftContainer, original, action, draftTitle) {
+    var loadingIcon = document.createElement("img");
+    loadingIcon.src = "/images/loading.png"
+    loadingIcon.classList.add("rotate");
+    draftContainer.innerText = "";
+    draftContainer.appendChild(loadingIcon);
     try {
         const draft = await callBackendAPI(original, action);
         draftContainer.innerText = draft;
@@ -12,7 +12,20 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.error(error);
         draftContainer.innerText = "Error: Unable to retrieve data";
     }
+}
+document.addEventListener("DOMContentLoaded", async function () {
+    let regenButton = document.getElementById('regenerate');
+    const draftContainer = document.getElementById("draft-container");
+    const data = await browser.storage.local.get(["original", "action", "draftTitle"]);
+    const original = data.original;
+    const action = data.action;
+    const draftTitle = data.draftTitle;
+    regenButton.addEventListener("click", function() {
+        regenerate(draftContainer, original, action, draftTitle)
+    });
+    regenerate(draftContainer, original, action, draftTitle)
 });
+
 async function callBackendAPI(original, action) {
     const data = await browser.storage.local.get(["model", "apiKey", "maxTokens"]);
     const model = data.model;

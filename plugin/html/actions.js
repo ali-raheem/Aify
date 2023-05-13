@@ -30,6 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     async function rewrite(original, action, draftTitle) {
         await browser.storage.local.set({ original: original, action: action, draftTitle: draftTitle });
-        browser.windows.create({ url: "/html/draft.html", type: "popup", width: 500, height: 600 });
+        browser.windows.create({ url: "/html/draft.html", type: "popup", width: 512, height: 600 });
     }
 });
