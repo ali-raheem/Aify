@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     let regenButton = document.getElementById('regenerate');
     const draftContainer = document.getElementById("draft-container");
     const data = await browser.storage.local.get(["original", "action", "draftTitle"]);
+    browser.storage.local.set({original: "", action: "", draftTitle: ""});
     const original = data.original;
     const action = data.action;
     const draftTitle = data.draftTitle;

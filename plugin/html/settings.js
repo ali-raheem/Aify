@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         modelSelect.value = defaultModel;
         apiKeyInput.value = "";
-	maxTokens.value = 0;
+	maxTokensInput.value = 0;
         defaultActions.forEach(function (action) {
             addAction(action.name, action.prompt);
         });
