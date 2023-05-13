@@ -12,12 +12,15 @@ Aify comes with plenty of stock prompts, which you can add to, delete or customi
 ## Screenshots
 
 ![Configuration](/screenshots/example.png)
+
 Make sure to configure the addon before use. You must at least set an API key and save it.
 
 ![Expand short sentences into detailed text](/screenshots/example1.png)
+
 You can use Aify to turn sentences into detailed emails.
 
 ![Translate or interpret complex text](/screenshots/example2.png)
+
 Or even translate and understand complex text.
 
 ## Configuration and Usage
@@ -69,17 +72,17 @@ zip -r ../aify.xpi *
 ## Privacy and Data Retention
 
 This add-on interfaces with OpenAI's API but collects no data itself other than settings stored locally.
-The text is sent to OpenAI's server and managed by their data retention policy
+The text is sent to OpenAI's server and managed by their data retention policy.
 
-OpenAI's privacy policy can be found at https://openai.com/policies/privacy-policy
-OpenAI's API data usage policy is here https://openai.com/policies/api-data-usage-policies
+- OpenAI's privacy policy can be found at https://openai.com/policies/privacy-policy
+- OpenAI's API data usage policy is here https://openai.com/policies/api-data-usage-policies
 
 ## License
 
 GPLv3
 
 ## Icons
-### Icons from UXWing.com
+### UXWing.com
 Licensing terms - https://uxwing.com/license
 - loading-*px.png - https://uxwing.com/loader-line-icon
 - icon*.png - https://uxwing.com/invention-icon
