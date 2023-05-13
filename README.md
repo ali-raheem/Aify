@@ -69,3 +69,9 @@ OpenAI's API data usage policy is here https://openai.com/policies/api-data-usag
 
 GPLv3
 
+## Icons
+### Icons from UXWing.com
+Licensing terms - https://uxwing.com/license
+- loading-*px.png - https://uxwing.com/loader-line-icon
+- icon*.png - https://uxwing.com/invention-icon
+
