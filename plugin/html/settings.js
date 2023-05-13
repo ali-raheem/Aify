@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { name: "Rewrite Formal", prompt: "Rewrite the following text to be more formal. Reply with only the re-written text and no extra comments." },
         { name: "Classify", prompt: "Classify the following text in terms of Politeness, Warmth, Formality, Assertiveness, Offensiveness giving a percentage for each category. Reply with only the category and score and no extra text." },
         { name: "Summerize this", prompt: "Summerize the following email into a bullet point list." },
+        { name: "Translate this", prompt: "Translate the following email in English." },
         { name: "Prompt provided", prompt: " " },
     ];
     var defaultModel = "gpt-3.5-turbo";
