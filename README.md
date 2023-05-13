@@ -2,6 +2,15 @@
 
 [Thunderbird addon](https://addons.thunderbird.net/en-GB/thunderbird/addon/aify/) to bring ChatGPT to your emails.
 
+Rewrite or generate text based on promps using OpenAI's API.
+Configure on settings page (make sure to save) and start to use when writing your emails!
+
+You must have API key for OpenAI (anyone can access GPT-3.5-turbo). But then you can use any model you have access to including finetuned ones.
+
+Aify comes with plenty of stock prompts, which you can add to, delete or customize as you need.
+
+## Screenshots
+
 ![Configuration](/screenshots/example.png)
 Make sure to configure the addon before use. You must at least set an API key and save it.
 
@@ -11,23 +20,23 @@ You can use Aify to turn sentences into detailed emails.
 ![Translate or interpret complex text](/screenshots/example2.png)
 Or even translate and understand complex text.
 
-Aify comes with plenty of stock prompts, which you can add to, delete or customize as you need. It can make use of any of the Chat models OpenAI provides.
-
 ## Configuration and Usage
 
 ### Configuration
 
-1. Set an API key in the addons settings menu (obtainable from [OpenAI](https://platform.openai.com/signup/).
-2. **Make sure you have access to the model (anyone can use gpt-3.5-turbo).**
-3. (Optional) Add, remove or edit the available actions.
-4. **Make sure to click save at the bottom of the page**
+1. Set an API key below (obtainable from OpenAI).
+2. (Optional) Once you've set an API key you can click Update Models to get the current list.
+3. **Make sure you have access to the selected model (anyone can use gpt-3.5-turbo).**
+4. (Optional) Add, remove or edit the available actions.
+5. **Make sure to click save button to store settings.**
 
 ### Usage
 
 1. Open a new compose window (Write, Reply or Forward).
-2. Highlight some text to act one
-3. Click the Aify icon in the top right (near the lightbulb) and pick an action
+2. Highlight some text to act one.
+3. Click the Aify icon in the top right (near the lightbulb) and pick an action.
 4. A popup will open and await the response from the API. This may take time at periods of high load.
+5. (Optional) Click `Regenerate` to get a new response.
 
 ## Tips and Tricks
 
@@ -54,7 +63,7 @@ zip -r ../aify.xpi *
 - [MOD] Model selection should be on a per-prompt basis.
 - [LOW] Model selection should be selectable from the context menu.
 - [MOD] Make it so any API could be used.
-- [HIGH] Styling and UX improvements.
+- [MOD] Styling and UX improvements.
 - [LOW] Mask API key in settings once saved.
 
 ## Privacy and Data Retention
