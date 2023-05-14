@@ -19,12 +19,12 @@ document.addEventListener("DOMContentLoaded", function () {
     var defaultModel = "gpt-3.5-turbo";
     browser.storage.local.get(["model", "apiKey", "actions", "maxTokens"], function (data) {
         let model = data.model || defaultModel;
-        modelSelect.value = model;
         apiKeyInput.value = data.apiKey || "";
-	    let option = document.createElement("option");
-	    option.value = model;
-	    option.text = model;
-	    modelSelect.add(option);
+	let option = document.createElement("option");
+	option.value = model;
+	option.text = model;
+	modelSelect.add(option);
+        modelSelect.value = model;
 	maxTokensInput.value = data.maxTokens || 0;
         var actions = data.actions || defaultActions;
         actions.forEach(function (action) {
