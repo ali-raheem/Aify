@@ -37,7 +37,8 @@ async function callBackendAPI(original, action) {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
 	body: JSON.stringify({ 
 	    model: model, 
-	    messages: [{ role: "user", content: `${action}\n---\n${original}` }], 
+	    messages: [{role: "system", content: action},
+		       {role: "user", content: original}], 
 	    ...(maxTokens ? { 'max_tokens': maxTokens } : {})
 	}),
     });
