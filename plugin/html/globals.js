@@ -1,5 +1,5 @@
-const promptVersion = 2;
-const defaultActions = [
+export const promptVersion = 2;
+export const defaultActions = [
     { name: "Reply to this", prompt: "Reply to the following email." },
     { name: "Rewrite Polite", prompt: "Rewrite the following text to be more polite. Reply with only the re-written text and no extra comments." },
     { name: "Rewrite Formal", prompt: "Rewrite the following text to be more formal. Reply with only the re-written text and no extra comments." },
@@ -8,4 +8,4 @@ const defaultActions = [
     { name: "Translate this", prompt: "Translate the following email in English." },
     { name: "Prompt provided", prompt: "You are a helpful chatbot that will do their best to complete the following tasks with a single response." },
 ];
-const defaultModel = "gpt-3.5-turbo";
+export const defaultModel = "gpt-3.5-turbo";

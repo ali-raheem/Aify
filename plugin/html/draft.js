@@ -1,3 +1,5 @@
+import { fetchModels, fetchResponse } from './API.js';
+
 async function regenerate(draftContainer, original, action, draftTitle) {
     const loadingIcon = document.createElement("img");
     loadingIcon.src = "/images/loading.png";
@@ -18,30 +20,8 @@ async function regenerate(draftContainer, original, action, draftTitle) {
 
 async function callBackendAPI(original, action) {
     const { model, apiKey, maxTokens } = await browser.storage.local.get(["model", "apiKey", "maxTokens"]);
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: { 
-            "Content-Type": "application/json", 
-            Authorization: `Bearer ${apiKey}` 
-        },
-        body: JSON.stringify({ 
-            model, 
-            messages: [
-                { role: "system", content: action },
-                { role: "user", content: original }
-            ], 
-            ...(maxTokens > 0 ? { 'max_tokens': parseInt(maxTokens) } : {})
-        }),
-    });
-
-    if (!response.ok) {
-        const errorDetail = await response.text();
-        throw new Error(`API request failed: ${response.status}, Detail: ${errorDetail}`);
-    }
-    
-
-    const responseData = await response.json();
-    return responseData.choices[0].message.content;
+    const response = await fetchResponse(apiKey, model, original, action, maxTokens);
+    return response;
 }
 
 document.addEventListener("DOMContentLoaded", async () => {

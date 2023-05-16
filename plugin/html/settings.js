@@ -1,3 +1,6 @@
+import { fetchModels } from './API.js';
+import { promptVersion, defaultActions, defaultModel } from './globals.js';
+
 const addAction = (name, prompt, actionsContainer) => {
     const actionDiv = document.createElement("div");
     const nameInput = document.createElement("input");
@@ -91,26 +94,20 @@ const setDefaultSettings = (actionsContainer, modelSelect, apiKeyInput, maxToken
     });
 };
 
-const getModels = async (apiKeyInput, getModelsButton) => {
-	const response = await fetch("https://api.openai.com/v1/models", {
-            method: "GET",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKeyInput.value}` },
-	});
-	if (!response.ok) {
-            throw new Error(`API request failed: ${response.status}`);
-	}
-	const responseData = await response.json();
-	var selectElement = document.getElementById("model");
-	selectElement.remove(0);
-	responseData.data.map(model => {
-	    let option = document.createElement("option");
-	    let selectElement = document.getElementById("model");
-	    option.value = model.id;
-	    option.text = model.id;
-	    selectElement.add(option);
-	});
-	getModelsButton.disabled = true;
+const getModels = async (apiKey) => {
+    const responseData = await fetchModels(apiKey);
+    
+    var selectElement = document.getElementById("model");
+    selectElement.remove(0);
+    responseData.data.map(model => {
+        let option = document.createElement("option");
+        let selectElement = document.getElementById("model");
+        option.value = model.id;
+        option.text = model.id;
+        selectElement.add(option);
+    });
 };
+
 
 const addModelToSelect = (model, modelSelect) => {
     let option = document.createElement("option");
@@ -144,6 +141,6 @@ document.addEventListener("DOMContentLoaded", () => {
         addActionButton.addEventListener("click", () => addAction("", "", actionsContainer));
         saveButton.addEventListener("click", () => saveSettings(actionsContainer, modelSelect, apiKeyInput, maxTokensInput));
         defaultButton.addEventListener("click", () => setDefaultSettings(actionsContainer, modelSelect, apiKeyInput, maxTokensInput));
-        getModelsButton.addEventListener("click", () => getModels(apiKeyInput, getModelsButton));
+        getModelsButton.addEventListener("click", () => getModels(apiKeyInput.value));
     });
 });

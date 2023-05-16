@@ -1,3 +1,5 @@
+import { promptVersion } from './globals.js';
+
 const addAction = (name, prompt, actionsContainer) => {
     const actionDiv = document.createElement("div");
     const nameInput = document.createElement("p");
