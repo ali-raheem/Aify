@@ -1,6 +1,17 @@
+var promptVersion = 2;
+
 document.addEventListener("DOMContentLoaded", function () {
     var actionsContainer = document.getElementById("actions-container");
-    browser.storage.local.get(["actions"], function (data) {
+    browser.storage.local.get(["actions", "promptUpdated"], function (data) {
+        let promptUpdated = +data.promptUpdated || 0;
+        console.log(promptUpdated);
+        if (promptVersion > promptUpdated) {
+            let warningIcon = document.createElement('img');
+            warningIcon.src = "/images/warning.png";
+            warningIcon.classList.add('small-icon');
+            let settingsLink = document.getElementById('settings-link');
+            settingsLink.appendChild(warningIcon);
+        };
         var actions = data.actions;
         actions.forEach(function (action) {
             addAction(action.name, action.prompt);
@@ -10,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
         var actionDiv = document.createElement("div");
         var nameInput = document.createElement("p");
         nameInput.classList.add("button,");
-        nameInput.classList.add(".neutral");
         nameInput.innerText = name;
         nameInput.classList.add("action-name");
         function getHighlightedText() {

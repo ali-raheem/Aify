@@ -14,3 +14,7 @@
 .good {
     background-color: #04aa6d;
 }
+.small-icon {
+    height: 8px;
+    width: 8px;
+}
