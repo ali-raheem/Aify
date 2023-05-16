@@ -10,7 +10,7 @@ async function regenerate(draftContainer, original, action, draftTitle) {
 
     try {
         const draft = await callBackendAPI(original, action);
-        draftContainer.textContent = draft;
+        draftContainer.innerText = draft;
         document.title = draftTitle;
     } catch (error) {
         console.error(error);
