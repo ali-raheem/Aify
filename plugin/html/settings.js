@@ -1,3 +1,15 @@
+var promptVersion = 2;
+var defaultActions = [
+    { name: "Reply to this", prompt: "Reply to the following email." },
+    { name: "Rewrite Polite", prompt: "Rewrite the following text to be more polite. Reply with only the re-written text and no extra comments." },
+    { name: "Rewrite Formal", prompt: "Rewrite the following text to be more formal. Reply with only the re-written text and no extra comments." },
+    { name: "Classify", prompt: "Classify the following text in terms of Politeness, Warmth, Formality, Assertiveness, Offensiveness giving a percentage for each category. Reply with only the category and score and no extra text." },
+    { name: "Summerize this", prompt: "Summerize the following email into a bullet point list." },
+    { name: "Translate this", prompt: "Translate the following email in English." },
+    { name: "Prompt provided", prompt: "You are a helpful chatbot that will do their best to complete the following tasks with a single response." },
+];
+var defaultModel = "gpt-3.5-turbo";
+
 document.addEventListener("DOMContentLoaded", function () {
     var modelSelect = document.getElementById("model");
     var apiKeyInput = document.getElementById("api-key");
@@ -7,25 +19,46 @@ document.addEventListener("DOMContentLoaded", function () {
     var getModelsButton = document.getElementById("get-models");
     var maxTokensInput = document.getElementById("max-tokens");
     var defaultButton = document.getElementById("default-settings");
-    var defaultActions = [
-        { name: "Reply to this", prompt: "Reply to the following email." },
-        { name: "Rewrite Polite", prompt: "Rewrite the following text to be more polite. Reply with only the re-written text and no extra comments." },
-        { name: "Rewrite Formal", prompt: "Rewrite the following text to be more formal. Reply with only the re-written text and no extra comments." },
-        { name: "Classify", prompt: "Classify the following text in terms of Politeness, Warmth, Formality, Assertiveness, Offensiveness giving a percentage for each category. Reply with only the category and score and no extra text." },
-        { name: "Summerize this", prompt: "Summerize the following email into a bullet point list." },
-        { name: "Translate this", prompt: "Translate the following email in English." },
-        { name: "Prompt provided", prompt: " " },
-    ];
-    var defaultModel = "gpt-3.5-turbo";
-    browser.storage.local.get(["model", "apiKey", "actions", "maxTokens"], function (data) {
+    browser.storage.local.get(["model", "apiKey", "actions", "maxTokens", "promptUpdated"], function (data) {
         let model = data.model || defaultModel;
         apiKeyInput.value = data.apiKey || "";
-	let option = document.createElement("option");
-	option.value = model;
-	option.text = model;
-	modelSelect.add(option);
+        let option = document.createElement("option");
+        option.value = model;
+        option.text = model;
+        modelSelect.add(option);
         modelSelect.value = model;
-	maxTokensInput.value = data.maxTokens || 0;
+        maxTokensInput.value = data.maxTokens || 0;
+        let promptUpdated =  +data.promptUpdated || 0; 
+        if (promptVersion > promptUpdated) {
+            console.log('Warn prompts are stale.');
+            let notesContainer = document.getElementById('notes-container');
+            let warningContainer = document.createElement('div');
+            warningContainer.classList.add('row')
+            let warningDiv25 = document.createElement('div');
+            warningDiv25.classList.add('col-25');
+            let warningDiv75 = document.createElement('div');
+            warningDiv75.classList.add('col-75');
+            let warningIcon = document.createElement('img');
+            warningIcon.src = "/images/warning.png";
+            warningIcon.classList.add('small-icon');
+            let warningText = document.createElement('span');
+            warningText.innerText = "Prompts have been updated. Please backup custom prompts and click clear to load latest prompts. ";
+            let ignoreButton = document.createElement('button');
+            ignoreButton.classList.add('button');
+            ignoreButton.classList.add('bad');
+            ignoreButton.innerText = "Ignore";
+            ignoreButton.addEventListener('click', function () {
+                browser.storage.local.set({promptUpdated: promptVersion});
+                warningContainer.parentElement.removeChild(warningContainer);
+            });
+            warningDiv25.innerText = "Warning "
+            warningDiv25.appendChild(warningIcon);
+            warningDiv75.appendChild(warningText);
+            warningDiv75.appendChild(ignoreButton);
+            warningContainer.appendChild(warningDiv25);
+            warningContainer.appendChild(warningDiv75);
+            notesContainer.appendChild(warningContainer);
+        }
         var actions = data.actions || defaultActions;
         actions.forEach(function (action) {
             addAction(action.name, action.prompt);
@@ -40,7 +73,11 @@ document.addEventListener("DOMContentLoaded", function () {
             var promptInput = actionDiv.querySelector(".action-prompt");
             return { name: nameInput.value, prompt: promptInput.value };
         });
-        browser.storage.local.set({ model: modelSelect.value, apiKey: apiKeyInput.value, actions: actions, maxTokens: maxTokensInput.value });
+        browser.storage.local.set({
+            model: modelSelect.value,
+            apiKey: apiKeyInput.value,
+            actions: actions,
+            maxTokens: maxTokensInput.value });
     });
     defaultButton.addEventListener("click", function () {
         while (actionsContainer.firstChild) {
@@ -48,11 +85,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         modelSelect.value = defaultModel;
         apiKeyInput.value = "";
-	maxTokensInput.value = 0;
+	    maxTokensInput.value = 0;
         defaultActions.forEach(function (action) {
             addAction(action.name, action.prompt);
         });
-        browser.storage.local.set({ model: defaultModel, apiKey: "", actions: defaultActions });
+        browser.storage.local.set({
+            model: defaultModel,
+            apiKey: "", 
+            actions: defaultActions, 
+            promptUpdated: promptVersion});
     });
     getModelsButton.addEventListener("click", async function () {
 	var apiKeyInput = document.getElementById("api-key");

@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="settings.css">
   </head>
   <body>
-    <div class="container">
+    <div class="container" id="notes-container">
       <div class="row">
 	<div class="col-25">
 	  Configuration
@@ -67,7 +67,8 @@
 	<div class="col-25"></div>
 	<div class="col-75">
 	  <button id="get-models" value="Update Model List" class="button neutral">Update Models (need API key)</button>
-          <button value="Save" id="save-settings" class="button good">Save</button>
+    <button id="default-settings" value="Clear Settings" class="button bad">Clear Settings</button>
+    <button value="Save" id="save-settings" class="button good">Save</button>
 	</div>
       </div>
       <div class="row">
@@ -78,7 +79,6 @@
 	<div class="col-25"> </div>
 	<div class="col-75">
           <button id="add-action" value="Add Prompt" class="button neutral">Add Prompt</button>
-          <button id="default-settings" value="Clear Settings" class="button bad">Clear Settings</button>
 	</div>
       </div>
       <script src="settings.js"></script>
