@@ -124,24 +124,6 @@ const getModels = async (apiKeyInput, getModelsButton) => {
 	getModelsButton.disabled = true;
 };
 
-const handleDOMContentLoad = (modelSelect, apiKeyInput, actionsContainer, addActionButton, saveButton, getModelsButton, maxTokensInput, defaultButton, notesContainer) => {
-    browser.storage.local.get(["model", "apiKey", "actions", "maxTokens", "promptUpdated"], (data) => {
-        const { model = defaultModel, apiKey = '', maxTokens = 0, promptUpdated = 0, actions = defaultActions } = data;
-
-        apiKeyInput.value = apiKey;
-        addModelToSelect(model, modelSelect);
-        maxTokensInput.value = maxTokens;
-        handleWarning(promptUpdated, notesContainer);
-
-        actions.forEach(({ name, prompt }) => addAction(name, prompt, actionsContainer));
-
-        addActionButton.addEventListener("click", () => addAction("", "", actionsContainer));
-        saveButton.addEventListener("click", () => saveSettings(actionsContainer, modelSelect, apiKeyInput, maxTokensInput));
-        defaultButton.addEventListener("click", () => setDefaultSettings(actionsContainer, modelSelect, apiKeyInput, maxTokensInput));
-        getModelsButton.addEventListener("click", () => getModels(apiKeyInput, getModelsButton));
-    });
-}
-
 const addModelToSelect = (model, modelSelect) => {
     let option = document.createElement("option");
     option.value = model;
@@ -161,5 +143,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const defaultButton = document.getElementById("default-settings");
     const notesContainer = document.getElementById("notes-container");
 
-    handleDOMContentLoad(modelSelect, apiKeyInput, actionsContainer, addActionButton, saveButton, getModelsButton, maxTokensInput, defaultButton, notesContainer);
+    browser.storage.local.get(["model", "apiKey", "actions", "maxTokens", "promptUpdated"], (data) => {
+        const { model = defaultModel, apiKey = '', maxTokens = 0, promptUpdated = 0, actions = defaultActions } = data;
+
+        apiKeyInput.value = apiKey;
+        addModelToSelect(model, modelSelect);
+        maxTokensInput.value = maxTokens;
+        handleWarning(promptUpdated, notesContainer);
+
+        actions.forEach(({ name, prompt }) => addAction(name, prompt, actionsContainer));
+
+        addActionButton.addEventListener("click", () => addAction("", "", actionsContainer));
+        saveButton.addEventListener("click", () => saveSettings(actionsContainer, modelSelect, apiKeyInput, maxTokensInput));
+        defaultButton.addEventListener("click", () => setDefaultSettings(actionsContainer, modelSelect, apiKeyInput, maxTokensInput));
+        getModelsButton.addEventListener("click", () => getModels(apiKeyInput, getModelsButton));
+    });
 });
