@@ -66,7 +66,7 @@ zip -r ../aify.xpi *
 - [MOD] Model selection should be on a per-prompt basis.
 - [LOW] Model selection should be selectable from the context menu.
 - [MOD] Make it so any API could be used.
-- [MOD] Styling and UX improvements.
+- ~~[MOD] Styling and UX improvements.~~
 - [LOW] Mask API key in settings once saved.
 
 ## Privacy and Data Retention
@@ -84,6 +84,7 @@ GPLv3
 ## Icons
 ### UXWing.com
 Licensing terms - https://uxwing.com/license
-- loading-*px.png - https://uxwing.com/loader-line-icon
-- icon*.png - https://uxwing.com/invention-icon
+- loading - https://uxwing.com/loader-line-icon
+- icon - https://uxwing.com/invention-icon
+- caution.png - https://uxwing.com/caution-icon
 

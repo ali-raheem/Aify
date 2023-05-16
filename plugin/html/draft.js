@@ -1,50 +1,57 @@
-async function regenerate (draftContainer, original, action, draftTitle) {
-    var loadingIcon = document.createElement("img");
-    loadingIcon.src = "/images/loading.png"
+async function regenerate(draftContainer, original, action, draftTitle) {
+    const loadingIcon = document.createElement("img");
+    loadingIcon.src = "/images/loading.png";
     loadingIcon.classList.add("rotate");
-    draftContainer.innerText = "";
+
+    draftContainer.textContent = "";
     draftContainer.appendChild(loadingIcon);
+
     try {
         const draft = await callBackendAPI(original, action);
-        draftContainer.innerText = draft;
+        draftContainer.textContent = draft;
         document.title = draftTitle;
     } catch (error) {
         console.error(error);
-        draftContainer.innerText = "Error: Unable to retrieve data";
+        draftContainer.textContent = "Error: Unable to retrieve data";
     }
 }
-document.addEventListener("DOMContentLoaded", async function () {
-    let regenButton = document.getElementById('regenerate');
-    const draftContainer = document.getElementById("draft-container");
-    const data = await browser.storage.local.get(["original", "action", "draftTitle"]);
-    browser.storage.local.set({original: "", action: "", draftTitle: ""});
-    const original = data.original;
-    const action = data.action;
-    const draftTitle = data.draftTitle;
-    regenButton.addEventListener("click", function() {
-        regenerate(draftContainer, original, action, draftTitle)
-    });
-    regenerate(draftContainer, original, action, draftTitle)
-});
 
 async function callBackendAPI(original, action) {
-    const data = await browser.storage.local.get(["model", "apiKey", "maxTokens"]);
-    const model = data.model;
-    const apiKey = data.apiKey;
-    const maxTokens = parseInt(data.maxTokens);
+    const { model, apiKey, maxTokens } = await browser.storage.local.get(["model", "apiKey", "maxTokens"]);
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-	body: JSON.stringify({ 
-	    model: model, 
-	    messages: [{role: "system", content: action},
-		       {role: "user", content: original}], 
-	    ...(maxTokens ? { 'max_tokens': maxTokens } : {})
-	}),
+        headers: { 
+            "Content-Type": "application/json", 
+            Authorization: `Bearer ${apiKey}` 
+        },
+        body: JSON.stringify({ 
+            model, 
+            messages: [
+                { role: "system", content: action },
+                { role: "user", content: original }
+            ], 
+            ...(maxTokens > 0 ? { 'max_tokens': parseInt(maxTokens) } : {})
+        }),
     });
+
     if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`);
+        const errorDetail = await response.text();
+        throw new Error(`API request failed: ${response.status}, Detail: ${errorDetail}`);
     }
+    
+
     const responseData = await response.json();
     return responseData.choices[0].message.content;
 }
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const regenButton = document.getElementById('regenerate');
+    const draftContainer = document.getElementById("draft-container");
+
+    const { original, action, draftTitle } = await browser.storage.local.get(["original", "action", "draftTitle"]);
+
+    await browser.storage.local.set({ original: "", action: "", draftTitle: "" });
+
+    regenButton.addEventListener("click", () => regenerate(draftContainer, original, action, draftTitle));
+    regenerate(draftContainer, original, action, draftTitle);
+});

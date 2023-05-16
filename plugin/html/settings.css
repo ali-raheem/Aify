@@ -1,11 +1,8 @@
-.col-25,
-.col-75 {
-    float: left;
-    margin-top: 6px;
-}
+/* Base Styles */
 textarea {
     height: 100px;
 }
+
 input[type="text"],
 input[type="password"],
 select,
@@ -17,59 +14,82 @@ textarea {
     box-sizing: border-box;
     resize: vertical;
 }
+
 label {
     padding: 12px 12px 12px 0;
     display: inline-block;
 }
-.flat {
-    background-color: #fff;
-    color: #000;
-    cursor: pointer;
-    text-decoration: none;
+
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
 }
+
 .button {
     color: #fff;
     padding: 12px 20px;
     border-radius: 4px;
     cursor: pointer;
 }
+
+/* Button Variations */
 .neutral {
     background-color: #5f9ea0;
 }
+
 .bad {
     background-color: #dc143c;
 }
+
 .good {
     background-color: #04aa6d;
 }
-.container {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
+
+/* Layout */
+.col-25,
+.col-75 {
+    float: left;
+    margin-top: 6px;
 }
+
 .col-25 {
     width: 25%;
 }
+
 .col-75 {
     width: 75%;
 }
+
 .row:after {
     content: "";
     display: table;
     clear: both;
 }
+
+/* Utility Classes */
+.flat {
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 .rotate {
     width: 64px;
     animation: rotation 4s infinite linear;
 }
+
 @keyframes rotation {
     from {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
     to {
-      transform: rotate(719deg);
+        transform: rotate(719deg);
     }
-  }
+}
+
+/* Responsive Rules */
 @media screen and (max-width: 600px) {
     .col-25,
     .col-75 {
@@ -77,12 +97,15 @@ label {
         margin-top: 0;
     }
 }
+
+/* Page Specific Rules */
 .draft-page {
     justify-content: space-between;
     flex-direction: column;
     height: 100vh;
     display: flex;
-  }
+}
+
 .draft-page .btns {
     justify-content: flex-end;
     display: flex;
