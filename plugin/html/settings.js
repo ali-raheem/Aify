@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log('Warn prompts are stale.');
             let notesContainer = document.getElementById('notes-container');
             let warningContainer = document.createElement('div');
+            warningContainer.id = "warning-container";
             warningContainer.classList.add('row')
             let warningDiv25 = document.createElement('div');
             warningDiv25.classList.add('col-25');
@@ -59,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
             warningContainer.appendChild(warningDiv75);
             notesContainer.appendChild(warningContainer);
         }
-        var actions = data.actions || defaultActions;
+        let actions = data.actions || defaultActions;
         actions.forEach(function (action) {
             addAction(action.name, action.prompt);
         });
@@ -77,7 +78,9 @@ document.addEventListener("DOMContentLoaded", function () {
             model: modelSelect.value,
             apiKey: apiKeyInput.value,
             actions: actions,
-            maxTokens: maxTokensInput.value });
+            maxTokens: maxTokensInput.value,
+            promptUpdated: promptVersion
+        });
     });
     defaultButton.addEventListener("click", function () {
         while (actionsContainer.firstChild) {

@@ -1,45 +1,50 @@
-var promptVersion = 2;
+const promptVersion = 2;
 
-document.addEventListener("DOMContentLoaded", function () {
-    var actionsContainer = document.getElementById("actions-container");
-    browser.storage.local.get(["actions", "promptUpdated"], function (data) {
-        let promptUpdated = +data.promptUpdated || 0;
-        console.log(promptUpdated);
+const addAction = (name, prompt, actionsContainer) => {
+    const actionDiv = document.createElement("div");
+    const nameInput = document.createElement("p");
+    nameInput.classList.add("flat");
+    nameInput.innerText = name;
+    nameInput.classList.add("action-name");
+
+    const getHighlightedText = () => {
+        return browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+            return browser.tabs.sendMessage(tabs[0].id, { command: "getSelectedText" });
+        });
+    };
+
+    nameInput.onclick = () => {
+        getHighlightedText().then((highlightedText) => {
+            if (highlightedText) {
+                rewrite(highlightedText, prompt, name);
+            }
+        });
+    };
+
+    actionDiv.appendChild(nameInput);
+    actionsContainer.appendChild(actionDiv);
+};
+
+const rewrite = async (original, action, draftTitle) => {
+    await browser.storage.local.set({ original, action, draftTitle });
+    browser.windows.create({ url: "/html/draft.html", type: "popup", width: 512, height: 600 });
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    const actionsContainer = document.getElementById("actions-container");
+    browser.storage.local.get(["actions", "promptUpdated"], (data) => {
+        const { actions, promptUpdated = 0 } = data;
+
         if (promptVersion > promptUpdated) {
-            let warningIcon = document.createElement('img');
+            const warningIcon = document.createElement('img');
             warningIcon.src = "/images/warning.png";
             warningIcon.classList.add('small-icon');
-            let settingsLink = document.getElementById('settings-link');
+            const settingsLink = document.getElementById('settings-link');
             settingsLink.appendChild(warningIcon);
         };
-        var actions = data.actions;
-        actions.forEach(function (action) {
-            addAction(action.name, action.prompt);
+
+        actions.forEach((action) => {
+            addAction(action.name, action.prompt, actionsContainer);
         });
     });
-    function addAction(name, prompt) {
-        var actionDiv = document.createElement("div");
-        var nameInput = document.createElement("p");
-        nameInput.classList.add("button,");
-        nameInput.innerText = name;
-        nameInput.classList.add("action-name");
-        function getHighlightedText() {
-            return browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
-                return browser.tabs.sendMessage(tabs[0].id, { command: "getSelectedText" });
-            });
-        }
-        nameInput.onclick = function () {
-            getHighlightedText().then((highlightedText) => {
-                if (highlightedText) {
-                    rewrite(highlightedText, prompt, name);
-                }
-            });
-        };
-        actionDiv.appendChild(nameInput);
-        actionsContainer.appendChild(actionDiv);
-    }
-    async function rewrite(original, action, draftTitle) {
-        await browser.storage.local.set({ original: original, action: action, draftTitle: draftTitle });
-        browser.windows.create({ url: "/html/draft.html", type: "popup", width: 512, height: 600 });
-    }
 });
