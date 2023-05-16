@@ -1,5 +1,3 @@
-const promptVersion = 2;
-
 const addAction = (name, prompt, actionsContainer) => {
     const actionDiv = document.createElement("div");
     const nameInput = document.createElement("p");
