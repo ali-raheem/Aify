@@ -8,4 +8,5 @@ export const defaultActions = [
     { name: "Translate this", prompt: "Translate the following email in English." },
     { name: "Prompt provided", prompt: "You are a helpful chatbot that will do their best to complete the following tasks with a single response." },
 ];
+export const chatPrompt = "You are a helpful chatbot, answer any questions the user has";
 export const defaultModel = "gpt-3.5-turbo";

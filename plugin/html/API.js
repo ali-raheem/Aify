@@ -14,7 +14,7 @@ export const fetchModels = async (apiKey) => {
     return await response.json();
 };
 
-export const fetchResponse = async (apiKey, model, original, prompt, maxTokens) => {
+export const fetchResponse = async (apiKey, model, messages, maxTokens) => {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: { 
@@ -23,10 +23,7 @@ export const fetchResponse = async (apiKey, model, original, prompt, maxTokens) 
         },
         body: JSON.stringify({ 
             model, 
-            messages: [
-                { role: "system", content: prompt },
-                { role: "user", content: original }
-            ], 
+            messages: messages, 
             ...(maxTokens > 0 ? { 'max_tokens': parseInt(maxTokens) } : {})
         }),
     });

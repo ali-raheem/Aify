@@ -16,25 +16,23 @@ const addAction = (name, prompt, actionsContainer) => {
     nameInput.onclick = () => {
         getHighlightedText().then((highlightedText) => {
             if (highlightedText) {
-                rewrite(highlightedText, prompt, name);
+		const messages = [{role: "system", content: prompt},
+				  {role: "user", content: highlightedText}];
+		browser.storage.local.set({ messages, draftTitle: name }).then( () => {
+		    browser.windows.create({ url: "/html/draft.html", type: "popup",
+					     width: 600, height: 512 });
+		});
             }
         });
     };
-
     actionDiv.appendChild(nameInput);
     actionsContainer.appendChild(actionDiv);
-};
-
-const rewrite = async (original, action, draftTitle) => {
-    await browser.storage.local.set({ original, action, draftTitle });
-    browser.windows.create({ url: "/html/draft.html", type: "popup", width: 512, height: 600 });
 };
 
 document.addEventListener("DOMContentLoaded", () => {
     const actionsContainer = document.getElementById("actions-container");
     browser.storage.local.get(["actions", "promptUpdated"], (data) => {
         const { actions, promptUpdated = 0 } = data;
-
         if (promptVersion > promptUpdated) {
             const warningIcon = document.createElement('img');
             warningIcon.src = "/images/warning.png";
@@ -42,9 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const settingsLink = document.getElementById('settings-link');
             settingsLink.appendChild(warningIcon);
         };
-
-        actions.forEach((action) => {
-            addAction(action.name, action.prompt, actionsContainer);
-        });
+        actions.forEach((action) => {addAction(action.name, action.prompt, actionsContainer)});
     });
 });
