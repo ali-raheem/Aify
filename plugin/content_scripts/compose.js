@@ -1,7 +1,6 @@
 (function () {
 
   const makeParagraphs = (text, func) => {
-    console.log('ins', text);
     const chunks = text.split(/\n{2,}/);
     if (chunks.length == 1) {
       return func(document.createTextNode(text));
@@ -16,17 +15,16 @@
     }
   };
 
+ 
   const insert = function (text) {
     const prefix = window.document.body.getElementsByClassName("moz-cite-prefix");
     if (prefix.length >= 0) {
-      console.log("found prefix");
       const divider = prefix[0];
       let sibling = divider.previousSibling;
       while (sibling) {
         window.document.body.removeChild(sibling);
-        sibling = sibling.sibling;
+        sibling = divider.previousSibling;
       }
-      console.log('after removal', window.document.body.innerHTML);
     }
     return makeParagraphs(text, function (p) {
       window.document.body.insertBefore(p, window.document.body.firstChild);
@@ -38,9 +36,7 @@
     if (message.command === "getSelectedText") {
       return Promise.resolve(window.getSelection().toString());
     } else if (message.command === "replaceSelectedText") {
-      console.log('replacing with', message.text);
       const selectedText = window.getSelection().toString();
-      console.log('current selection', selectedText);
       if (!selectedText) {
         return insert(message.text);
       }
@@ -54,7 +50,17 @@
         r.insertNode(p);
       });
     } else if (message.command === "getText") {
-      return Promise.resolve(window.document.body.textContent);
+      let t = '';
+      const children = window.document.body.childNodes;
+      for (const node of children) {
+        if (node instanceof Element) {
+          if (node.classList.contains('moz-signature')) {
+            continue;
+          }
+        }
+        t += node.textContent;
+      }
+      return Promise.resolve(t);
     }
   });
 })();

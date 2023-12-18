@@ -60,7 +60,7 @@ const handleWarning = (promptUpdated, notesContainer) => {
     }
 };
 
-const saveSettings = (actionsContainer, modelSelect, apiKeyInput, maxTokensInput) => {
+const saveSettings = (actionsContainer, modelSelect, apiKeyInput, maxTokensInput, maxSizeInput) => {
     const actions = Array.from(actionsContainer.children).map(actionDiv => {
         const nameInput = actionDiv.querySelector(".action-name");
         const promptInput = actionDiv.querySelector(".action-prompt");
@@ -72,17 +72,19 @@ const saveSettings = (actionsContainer, modelSelect, apiKeyInput, maxTokensInput
         apiKey: apiKeyInput.value,
         actions: actions,
         maxTokens: maxTokensInput.value,
+        maxSize: maxSizeInput.value,
         promptUpdated: promptVersion
     });
 };
 
-const setDefaultSettings = (actionsContainer, modelSelect, apiKeyInput, maxTokensInput) => {
+const setDefaultSettings = (actionsContainer, modelSelect, apiKeyInput, maxTokensInput, maxSizeInput) => {
     while (actionsContainer.firstChild) {
         actionsContainer.firstChild.remove();
     }
     modelSelect.value = defaultModel;
     apiKeyInput.value = "";
     maxTokensInput.value = 0;
+    maxSizeInput.value = 0;
     defaultActions.forEach(({ name, prompt }) => {
         addAction(name, prompt, actionsContainer);
     });
@@ -125,22 +127,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const saveButton = document.getElementById("save-settings");
     const getModelsButton = document.getElementById("get-models");
     const maxTokensInput = document.getElementById("max-tokens");
+    const maxSizeInput = document.getElementById("max-size");
     const defaultButton = document.getElementById("default-settings");
     const notesContainer = document.getElementById("notes-container");
 
-    browser.storage.local.get(["model", "apiKey", "actions", "maxTokens", "promptUpdated"], (data) => {
-        const { model = defaultModel, apiKey = '', maxTokens = 0, promptUpdated = 0, actions = defaultActions } = data;
+    browser.storage.local.get(["model", "apiKey", "actions", "maxTokens", "promptUpdated", "maxSize"], (data) => {
+        const { model = defaultModel, apiKey = '', maxTokens = 0, promptUpdated = 0, maxSize = 0, actions = defaultActions } = data;
 
         apiKeyInput.value = apiKey;
         addModelToSelect(model, modelSelect);
         maxTokensInput.value = maxTokens;
+        maxSizeInput.value = maxSize;
         handleWarning(promptUpdated, notesContainer);
 
         actions.forEach(({ name, prompt }) => addAction(name, prompt, actionsContainer));
 
         addActionButton.addEventListener("click", () => addAction("", "", actionsContainer));
-        saveButton.addEventListener("click", () => saveSettings(actionsContainer, modelSelect, apiKeyInput, maxTokensInput));
-        defaultButton.addEventListener("click", () => setDefaultSettings(actionsContainer, modelSelect, apiKeyInput, maxTokensInput));
+        saveButton.addEventListener("click", () => saveSettings(actionsContainer, modelSelect, apiKeyInput, maxTokensInput, maxSizeInput));
+        defaultButton.addEventListener("click", () => setDefaultSettings(actionsContainer, modelSelect, apiKeyInput, maxTokensInput, maxSizeInput));
         getModelsButton.addEventListener("click", () => getModels(apiKeyInput.value));
     });
 });
