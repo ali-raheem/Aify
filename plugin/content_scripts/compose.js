@@ -18,7 +18,7 @@
  
   const insert = function (text) {
     const prefix = window.document.body.getElementsByClassName("moz-cite-prefix");
-    if (prefix.length >= 0) {
+    if (prefix.length > 0) {
       const divider = prefix[0];
       let sibling = divider.previousSibling;
       while (sibling) {
