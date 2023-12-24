@@ -7,23 +7,21 @@ const addAction = (name, prompt, actionsContainer) => {
     nameInput.innerText = name;
     nameInput.classList.add("action-name");
 
-    const getHighlightedText = () => {
-        return browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
-            return browser.tabs.sendMessage(tabs[0].id, { command: "getSelectedText" });
-        });
+    const getHighlight = async () => {
+        const tabs = await browser.tabs.query({ active: true, currentWindow: true });
+        return {tabId: tabs[0].id, text: await browser.tabs.sendMessage(tabs[0].id, { command: "getSelectedText" })};
     };
 
-    nameInput.onclick = () => {
-        getHighlightedText().then((highlightedText) => {
-            if (highlightedText) {
-		const messages = [{role: "system", content: prompt},
-				  {role: "user", content: highlightedText}];
-		browser.storage.local.set({ messages, draftTitle: name }).then( () => {
-		    browser.windows.create({ url: "/html/draft.html", type: "popup",
-					     width: 600, height: 512 });
-		});
-            }
-        });
+    nameInput.onclick = async () => {
+        const hl = await getHighlight();
+        if (hl.text) {
+            const messages = [{role: "system", content: prompt},
+                    {role: "user", content: hl.text}];
+            browser.storage.local.set({ messages, draftTitle: name, tabId: hl.tabId }).then( () => {
+                browser.windows.create({ url: "/html/draft.html", type: "popup",
+                            width: 600, height: 512 });
+            });
+        }
     };
     actionDiv.appendChild(nameInput);
     actionsContainer.appendChild(actionDiv);
