@@ -1,5 +1,17 @@
 import { promptVersion } from './globals.js';
 
+const truncate = async (text) => {
+    const { maxSize } = await browser.storage.local.get(
+        ["maxSize"]);
+    const max = parseInt(maxSize, 10);
+    if (isNaN(max) || max <= 0) {
+        return text;
+    }
+    const ret = text.substring(0, Math.min(text.length, max));
+    return ret;
+}
+    
+
 const addAction = (name, prompt, actionsContainer) => {
     const actionDiv = document.createElement("div");
     const nameInput = document.createElement("p");
@@ -9,19 +21,24 @@ const addAction = (name, prompt, actionsContainer) => {
 
     const getHighlight = async () => {
         const tabs = await browser.tabs.query({ active: true, currentWindow: true });
-        return {tabId: tabs[0].id, text: await browser.tabs.sendMessage(tabs[0].id, { command: "getSelectedText" })};
+        return {tabId: tabs[0].id, 
+            selection: await browser.tabs.sendMessage(tabs[0].id, { command: "getSelectedText" }),
+            text: await browser.tabs.sendMessage(tabs[0].id, { command: "getText" })
+        };
     };
 
     nameInput.onclick = async () => {
         const hl = await getHighlight();
-        if (hl.text) {
-            const messages = [{role: "system", content: prompt},
-                    {role: "user", content: hl.text}];
-            browser.storage.local.set({ messages, draftTitle: name, tabId: hl.tabId }).then( () => {
-                browser.windows.create({ url: "/html/draft.html", type: "popup",
-                            width: 600, height: 512 });
-            });
+        const messages = [{role: "system", content: prompt}];
+        if (hl.selection) {
+            messages.push({role: "user", content: await truncate(hl.selection)});
+        } else {
+            messages.push({role: "user", content: await truncate(hl.text)});
         }
+        browser.storage.local.set({ messages, draftTitle: name, tabId: hl.tabId }).then( () => {
+            browser.windows.create({ url: "/html/draft.html", type: "popup",
+                        width: 600, height: 512 });
+        });
     };
     actionDiv.appendChild(nameInput);
     actionsContainer.appendChild(actionDiv);
